@@ -37,12 +37,12 @@ public class ValueSumTest {
     public void testRun(){
         valueSum  = new ValueSum();
         Builder builder = new Builder("1", "1");
-        JSONArray config = new JSONArray().put(new JSONObject().put("Name","test")
+        JSONObject config = new JSONObject().put("inputTopics", new JSONArray().put(new JSONObject().put("Name","test")
                 .put("FilterType", "DeviceId")
                 .put("FilterValue", "1")
                 .put("Mappings", new JSONArray().put(
                         new JSONObject().put("Source", "value.reading.value").put("Dest","value"))
-                ));
+                )));
         Message message = new Message(builder.formatMessage(ob1.toString()));
         message.setConfig(config.toString());
         valueSum.config(message);
