@@ -67,7 +67,7 @@
         <dependency>
             <groupId>com.github.SENERGY-Platform</groupId>
             <artifactId>analytics-operator-lib</artifactId>
-            <version>0bcc4ba1f5</version>
+            <version>e3d1048075</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
