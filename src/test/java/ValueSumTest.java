@@ -15,40 +15,58 @@
  */
 
 import com.jayway.jsonpath.JsonPath;
-import org.infai.seits.sepl.operators.Builder;
-import org.infai.seits.sepl.operators.Message;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import junit.framework.TestCase;
+import org.infai.ses.senergy.operators.Builder;
+import org.infai.ses.senergy.operators.Message;
+import org.infai.ses.senergy.testing.utils.JSONFileReader;
+import org.json.simple.JSONArray;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class ValueSumTest {
+
+public class ValueSumTest extends TestCase {
 
     static ValueSum valueSum;
-    protected JSONObject ob1 = new JSONObject();
-    protected JSONObject ob2 = new JSONObject();
+    static JSONArray messages = new JSONFileReader().parseFile("messages.json");;
+    static String configString;
 
-    public ValueSumTest (){
-        ob1.put("device_id", "1").put("value", new JSONObject().put("reading", new JSONObject().put("value", new Double(5))));
-        ob2.put("device_id", "1").put("value", new JSONObject().put("reading", new JSONObject().put("value", new Double(10))));
+    @Override
+    protected void setUp() throws Exception {
+        valueSum = new ValueSum();
     }
 
     @Test
-    public void testRun(){
-        valueSum  = new ValueSum();
+    public void testSingleDeviceId(){
+        configString = new JSONFileReader().parseFile("config-1.json").toString();
         Builder builder = new Builder("1", "1");
-        JSONObject config = new JSONObject().put("inputTopics", new JSONArray().put(new JSONObject().put("Name","test")
-                .put("FilterType", "DeviceId")
-                .put("FilterValue", "1")
-                .put("Mappings", new JSONArray().put(
-                        new JSONObject().put("Source", "value.reading.value").put("Dest","value"))
-                )));
-        Message message = new Message(builder.formatMessage(ob1.toString()));
-        message.setConfig(config.toString());
-        valueSum.config(message);
-        valueSum.run(message);
-        message.setMessage(builder.formatMessage(ob2.toString()));
-        valueSum.run(message);
-        Assert.assertEquals(new Double(15.0), JsonPath.parse(message.getMessageString()).read("$.analytics.sum"));
+        Message message = new Message();
+        message.setConfig(configString);
+        valueSum.setConfig(configString);
+        valueSum.configMessage(message);
+        for(Object msg : messages){
+            message.setMessage(builder.formatMessage(msg.toString()));
+            valueSum.run(message);
+        }
+        Assert.assertEquals(new Double(5.0), JsonPath.parse(message.getMessageString()).read("$.analytics.sum"));
+    }
+
+    @Test
+    public void testTwoDeviceIds(){
+        configString = new JSONFileReader().parseFile("config-2.json").toString();
+        Builder builder = new Builder("1", "1");
+        Message message = new Message();
+        message.setConfig(configString);
+        valueSum.setConfig(configString);
+        valueSum.configMessage(message);
+        for(Object msg : messages){
+            message.setMessage(builder.formatMessage(msg.toString()));
+            valueSum.run(message);
+        }
+        Assert.assertEquals(new Double(10.0), JsonPath.parse(message.getMessageString()).read("$.analytics.sum"));
+    }
+
+    @Override
+    protected void tearDown(){
+
     }
 }

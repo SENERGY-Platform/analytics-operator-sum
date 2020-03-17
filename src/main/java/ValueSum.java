@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-import org.infai.seits.sepl.operators.Message;
-import org.infai.seits.sepl.operators.OperatorInterface;
 
-public class ValueSum implements OperatorInterface {
+import org.infai.ses.senergy.operators.BaseOperator;
+import org.infai.ses.senergy.operators.Message;
 
-    private static Double currentValue = 0.0;
+public class ValueSum extends BaseOperator {
+
+    private Double currentValue = 0.0;
 
     @Override
     public void run(Message message) {
-        currentValue += message.getInput("value").getValue();
-        message.output("sum", (Math.round(currentValue * 1000.0) / 1000.0));
+        this.currentValue += message.getInput("value").getValue();
+        message.output("sum", (Math.round(this.currentValue * 1000.0) / 1000.0));
     }
 
     @Override
-    public void config(Message message) {
+    public void configMessage(Message message) {
         message.addInput("value");
     }
 }
