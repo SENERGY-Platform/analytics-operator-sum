@@ -63,7 +63,7 @@ public class ValueSum extends BaseOperator {
 
     @Override
     public Message configMessage(Message message) {
-        message.addInput("value");
+        message.addFlexInput("value");
         return message;
     }
 }
