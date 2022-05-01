@@ -36,7 +36,7 @@ public class ValueSum extends BaseOperator {
     @Override
     public void run(Message message) {
         try {
-            currentValue = message.getFlexInput("value").getValue();
+            currentValue += message.getFlexInput("value").getValue();
         } catch (NoValueException e) {
             System.out.println(e.getMessage());
             System.out.println(message.getMessage().getMessages());
