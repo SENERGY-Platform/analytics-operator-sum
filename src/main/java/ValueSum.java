@@ -64,6 +64,7 @@ public class ValueSum extends BaseOperator {
     @Override
     public Message configMessage(Message message) {
         message.addFlexInput("value");
+        message.addFlexInput("timestamp");
         return message;
     }
 }
