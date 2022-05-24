@@ -21,12 +21,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      - name: Install Java
-        uses: actions/setup-java@v2.3.1
-        with:
-          java-version: 11
-          distribution: 'adopt'
-          cache: 'maven'
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -37,8 +31,10 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64
-          repo-token: ${{ secrets.CR_PAT }}
           push: true
+          secrets: |
+            "GITHUB_ACTOR=${{ github.repository_owner }}"
+            "GITHUB_TOKEN=${{ secrets.CR_PAT }}"
           tags: |
             smartenergyplatform/analytics-operator-sum:prod
             ghcr.io/senergy-platform/analytics-operator-sum:prod

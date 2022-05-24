@@ -1,8 +1,9 @@
 FROM maven:3.6-openjdk-11-slim as builder
 ADD src /usr/src/app/src
 ADD pom.xml /usr/src/app
+ADD settings.xml /usr/src/app
 WORKDIR /usr/src/app
-RUN mvn clean install
+RUN mvn -s settings.xml clean install
 
 FROM openjdk:11-jre-slim
 LABEL org.opencontainers.image.source https://github.com/SENERGY-Platform/analytics-operator-sum
