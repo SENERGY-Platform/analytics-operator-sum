@@ -32,9 +32,6 @@ jobs:
           file: ./Dockerfile
           platforms: linux/amd64
           push: true
-          secrets: |
-            "GITHUB_ACTOR=${{ github.repository_owner }}"
-            "GITHUB_TOKEN=${{ secrets.CR_PAT }}"
           tags: |
             smartenergyplatform/analytics-operator-sum:prod
             ghcr.io/senergy-platform/analytics-operator-sum:prod
