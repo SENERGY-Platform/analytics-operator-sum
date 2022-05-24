@@ -61,13 +61,17 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/SENERGY-Platform/analytics-operator-lib</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>com.github.SENERGY-Platform</groupId>
-            <artifactId>analytics-operator-lib</artifactId>
-            <version>7c9406d2cf</version>
+            <groupId>org.infai.ses.senergy</groupId>
+            <artifactId>operator-lib</artifactId>
+            <version>0.3-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.SENERGY-Platform</groupId>
