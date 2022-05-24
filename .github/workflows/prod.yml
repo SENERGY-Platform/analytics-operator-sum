@@ -31,6 +31,7 @@ jobs:
           context: .
           file: ./Dockerfile
           platforms: linux/amd64
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           push: true
           tags: |
             smartenergyplatform/analytics-operator-sum:prod
