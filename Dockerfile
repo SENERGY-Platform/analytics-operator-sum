@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 RUN --mount=type=secret,id=GITHUB_ACTOR \
   --mount=type=secret,id=GITHUB_TOKEN \
   export GITHUB_ACTOR=$(cat /run/secrets/GITHUB_ACTOR) && \
-  export GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN) && \
+  export GITHUB_TOKEN=$(cat /run/secrets/GITHUB_TOKEN)
 
 RUN mvn -s settings.xml clean install
 
